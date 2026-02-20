@@ -7,8 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-import com.platzi.market.domain.Product;
-import com.platzi.market.persistence.entities.Producto;
+import com.platzi.market.domain.entity.Product;
+import com.platzi.market.persistence.entity.Producto;
 
 @Mapper(componentModel = "spring", uses = { CategoryMapper.class })
 public interface ProductMapper {

@@ -1,13 +1,13 @@
-package com.platzi.market.persistence;
+package com.platzi.market.persistence.repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.time.LocalDateTime;
 
-import com.platzi.market.domain.Product;
+import com.platzi.market.domain.entity.Product;
 import com.platzi.market.domain.repository.ProductRepository;
 import com.platzi.market.persistence.crud.ProductCrudRepository;
-import com.platzi.market.persistence.entities.Producto;
+import com.platzi.market.persistence.entity.Producto;
 import com.platzi.market.persistence.mapper.ProductMapper;
 
 import org.springframework.stereotype.Repository;

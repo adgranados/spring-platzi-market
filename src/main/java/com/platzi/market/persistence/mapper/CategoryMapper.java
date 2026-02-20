@@ -5,8 +5,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-import com.platzi.market.domain.Category;
-import com.platzi.market.persistence.entities.Categoria;
+import com.platzi.market.domain.entity.Category;
+import com.platzi.market.persistence.entity.Categoria;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {

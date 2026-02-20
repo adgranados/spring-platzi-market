@@ -1,4 +1,4 @@
-package com.platzi.market.persistence.entities;
+package com.platzi.market.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

@@ -3,7 +3,7 @@ package com.platzi.market.domain.repository;
 import java.util.List;
 import java.util.Optional;
 
-import com.platzi.market.domain.Product;
+import com.platzi.market.domain.entity.Product;
 
 public interface ProductRepository {
     List<Product> getAll();

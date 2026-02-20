@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.platzi.market.domain.Product;
+import com.platzi.market.domain.entity.Product;
 import com.platzi.market.domain.repository.ProductRepository;
 
 @Service

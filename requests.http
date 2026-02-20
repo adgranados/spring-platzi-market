@@ -1,0 +1,11 @@
+### Saludar
+GET http://localhost:8081/platzi-market/api/saludar/hola
+
+### Obtener todos los productos
+GET http://localhost:8081/platzi-market/api/products/all
+
+### Obtener un producto por ID
+GET http://localhost:8081/platzi-market/api/products/7
+
+### Obtener productos por categoría
+GET http://localhost:8081/platzi-market/api/products/category/1
