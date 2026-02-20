@@ -1,0 +1,31 @@
+### Obtener todas las compras
+GET http://localhost:8081/platzi-market/api/purchases/
+
+### Obtener compras por el ID del cliente
+GET http://localhost:8081/platzi-market/api/purchases/4546221
+
+### Guardar una nueva compra
+POST http://localhost:8081/platzi-market/api/purchases/
+Content-Type: application/json
+
+{
+  "clientId": "4546221",
+  "date": "2026-02-20T15:30:00",
+  "paymentMethod": "T",
+  "comment": "Compra de prueba",
+  "state": "P",
+  "items": [
+    {
+      "productId": 1,
+      "quantity": 2,
+      "total": 15000,
+      "active": true
+    },
+    {
+      "productId": 5,
+      "quantity": 1,
+      "total": 3500,
+      "active": true
+    }
+  ]
+}

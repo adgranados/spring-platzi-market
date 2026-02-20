@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.platzi.market.domain.entity.Purchase;
 import com.platzi.market.domain.repository.PurchaseRepository;
@@ -11,6 +12,7 @@ import com.platzi.market.persistence.crud.CompraCrudRepository;
 import com.platzi.market.persistence.entity.Compra;
 import com.platzi.market.persistence.mapper.PurchaseMapper;
 
+@Repository
 public class CompraRepository implements PurchaseRepository {
 
     @Autowired
