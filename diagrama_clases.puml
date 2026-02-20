@@ -1,0 +1,152 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+package "com.platzi.market.domain" {
+    package "domain.models" {
+        class Category {
+            - id: Integer
+            - description: String
+            - active: Boolean
+        }
+
+        class Product {
+            - productId: int
+            - name: String
+            - categoryId: int
+            - price: double
+            - stock: int
+            - active: boolean
+            - category: Category
+        }
+        Product "*" --> "1" Category : category
+    }
+
+    package "domain.repository" {
+        interface ProductRepository {
+            + getAll(): List<Product>
+            + getProducto(idProducto: int): Optional<Product>
+            + getProducto(codigoBarras: String): Optional<Product>
+            + getProductosBajoStock(cantidadStock: int): Optional<List<Product>>
+            + getProductosNoVendidosEn10Dias(): Optional<List<Product>>
+            + save(product: Product): Product
+            + delete(idProducto: int): void
+        }
+    }
+
+    package "domain.service" {
+        class ProductService {
+            - productRepository: ProductRepository
+            + getAll(): List<Product>
+            + getProducto(idProducto: int): Optional<Product>
+            + getProductosBajoStock(cantidadStock: int): Optional<List<Product>>
+            + save(product: Product): Product
+            + delete(idProducto: int): boolean
+            + getProductosNoVendidosEn10Dias(): Optional<List<Product>>
+        }
+        ProductService --> ProductRepository : uses
+    }
+}
+
+package "com.platzi.market.persistence" {
+    package "persistence.entities" {
+        class Categoria <<Entity>> {
+            - idCategoria: Integer
+            - descripcion: String
+            - estado: Boolean
+            - productos: List<Producto>
+        }
+
+        class Producto <<Entity>> {
+            - idProducto: Integer
+            - nombre: String
+            - idCategoria: Integer
+            - codigoBarras: String
+            - precioVenta: Double
+            - cantidadStock: Integer
+            - estado: Boolean
+            - categoria: Categoria
+        }
+        
+        class Cliente <<Entity>> {
+            - id: String
+            - nombre: String
+            - apellidos: String
+            - celular: Long
+            - direccion: String
+            - correoElectronico: String
+            - compras: List<Compra>
+        }
+
+        class Compra <<Entity>> {
+            - idCompra: Integer
+            - idCliente: String
+            - fecha: LocalDateTime
+            - medioPago: String
+            - comentario: String
+            - estado: String
+            - cliente: Cliente
+            - productos: List<ComprasProducto>
+        }
+
+        class ComprasProductoPK <<Embeddable>> {
+            - idCompra: Integer
+            - idProducto: Integer
+        }
+
+        class ComprasProducto <<Entity>> {
+            - id: ComprasProductoPK
+            - cantidad: Integer
+            - total: Double
+            - estado: Boolean
+            - compra: Compra
+            - producto: Producto
+        }
+        
+        Producto "*" -- "1" Categoria : > belongs to
+        Categoria "1" -- "*" Producto : > has many (productos)
+        
+        Compra "*" -- "1" Cliente : > belongs to
+        Cliente "1" -- "*" Compra : > has many (compras)
+        
+        ComprasProducto "*" -- "1" Compra : > belongs to
+        Compra "1" -- "*" ComprasProducto : > has many (productos)
+        
+        ComprasProducto "*" -- "1" Producto : > contains
+        ComprasProducto *-- ComprasProductoPK : > embedded id
+    }
+
+    package "persistence.crud" {
+        interface ProductCrudRepository <<Repository>> {
+            + findByIdCategoria(idCategoria: int): List<Producto>
+            + findByIdCategoriaOrderByNombreAsc(idCategoria: int): List<Producto>
+            + findByCantidadStockLessThanAndEstado(cantidadStock: int, estado: boolean): Optional<List<Producto>>
+            + findByCodigoBarras(codigoBarras: String): Optional<Producto>
+            + findByFechaGreaterThan(fecha: LocalDateTime): Optional<List<Producto>>
+        }
+    }
+
+    package "persistence.mapper" {
+        interface ProductMapper <<MapStruct>>
+        interface CategoryMapper <<MapStruct>>
+    }
+
+    class ProductoRepository <<Repository>> {
+        - productCrudRepository: ProductCrudRepository
+        - productMapper: ProductMapper
+        + getAll(): List<Product>
+        + findByIdCategoria(idCategoria: int): List<Producto>
+        + getProductosBajoStock(cantidadStock: int): Optional<List<Product>>
+        + getProducto(idProducto: int): Optional<Product>
+        + getProducto(codigoBarras: String): Optional<Product>
+        + save(product: Product): Product
+        + delete(idProducto: int): void
+        + getProductosNoVendidosEn10Dias(): Optional<List<Product>>
+    }
+}
+
+ProductoRepository .up.|> ProductRepository : implements
+ProductoRepository --> ProductCrudRepository : uses
+ProductoRepository --> ProductMapper : uses
+
+@enduml
